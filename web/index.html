@@ -19,7 +19,10 @@
                 <p id="msg" role="status" aria-live="polite">This page is password protected.</p>
             </header>
             <form>
-                <input type="password" id="pwd" name="pwd" aria-label="Password" placeholder="Password" autocomplete="current-password" spellcheck="false" disabled>
+                <div class="password-row">
+                    <input type="password" id="pwd" name="pwd" aria-label="Password" placeholder="Password" autocomplete="current-password" spellcheck="false" disabled>
+                    <button id="toggle-password" type="button" aria-label="Show password" aria-pressed="false" disabled>Show</button>
+                </div>
                 <input id="unlock" type="submit" value="Unlock" disabled>
             </form>
         </div>

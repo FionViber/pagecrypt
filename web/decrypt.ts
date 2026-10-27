@@ -9,6 +9,7 @@ function find<T>(selector: string): T {
 const pwd = find<HTMLInputElement>('#pwd')
 const msg = find<HTMLParagraphElement>('#msg')
 const form = find<HTMLFormElement>('form')
+const togglePassword = find<HTMLButtonElement>('#toggle-password')
 const unlock = find<HTMLInputElement>('#unlock')
 const languageSelect = find<HTMLSelectElement>('#language')
 
@@ -17,6 +18,10 @@ const messages = {
         title: 'Protected Page',
         protected: 'This page is password protected.',
         password: 'Password',
+        showPassword: 'Show',
+        hidePassword: 'Hide',
+        showPasswordLabel: 'Show password',
+        hidePasswordLabel: 'Hide password',
         unlock: 'Unlock',
         unlocking: 'Unlocking…',
         wrongPassword: 'Incorrect password. Try again.',
@@ -28,6 +33,10 @@ const messages = {
         title: '受密码保护的页面',
         protected: '此页面受密码保护。',
         password: '输入密码',
+        showPassword: '显示',
+        hidePassword: '隐藏',
+        showPasswordLabel: '显示密码',
+        hidePasswordLabel: '隐藏密码',
         unlock: '解锁',
         unlocking: '正在解锁…',
         wrongPassword: '密码不正确，请重试。',
@@ -55,6 +64,14 @@ function render() {
     pwd.setAttribute('aria-label', text.password)
     pwd.setAttribute('aria-invalid', String(message === 'wrongPassword'))
     pwd.disabled = busy || !ready
+    const passwordVisible = pwd.type === 'text'
+    togglePassword.textContent = passwordVisible ? text.hidePassword : text.showPassword
+    togglePassword.setAttribute(
+        'aria-label',
+        passwordVisible ? text.hidePasswordLabel : text.showPasswordLabel,
+    )
+    togglePassword.setAttribute('aria-pressed', String(passwordVisible))
+    togglePassword.disabled = busy || !ready
     unlock.value = busy ? text.unlocking : text.unlock
     unlock.disabled = busy || !ready
     form.setAttribute('aria-busy', String(busy))
@@ -63,6 +80,11 @@ function render() {
 languageSelect.addEventListener('change', () => {
     language = languageSelect.value === 'zh-CN' ? 'zh-CN' : 'en'
     render()
+})
+togglePassword.addEventListener('click', () => {
+    pwd.type = pwd.type === 'password' ? 'text' : 'password'
+    render()
+    pwd.focus()
 })
 pwd.addEventListener('input', () => {
     if (message === 'wrongPassword') {

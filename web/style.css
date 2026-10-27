@@ -51,8 +51,15 @@ form {
     gap: 12px;
 }
 
+.password-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+}
+
 #pwd,
-#unlock {
+#unlock,
+#toggle-password {
     width: 100%;
     min-height: 48px;
     border-radius: 10px;
@@ -109,6 +116,27 @@ form {
     cursor: wait;
 }
 
+#toggle-password {
+    min-width: 76px;
+    border: 1px solid #dfe2e6;
+    background: #fff;
+    color: #39423d;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#toggle-password:hover:not(:disabled) {
+    border-color: #b9bec6;
+    background: #f9faf9;
+}
+
+#toggle-password:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
 #language {
     position: absolute;
     top: 24px;
@@ -126,6 +154,7 @@ form {
     cursor: pointer;
 }
 #unlock:focus-visible,
+#toggle-password:focus-visible,
 #language:focus-visible {
     outline: 2px solid #7c8796;
     outline-offset: 3px;
@@ -152,7 +181,8 @@ form {
 }
 @media (prefers-reduced-motion: reduce) {
     #pwd,
-    #unlock {
+    #unlock,
+    #toggle-password {
         transition: none;
     }
 }
