@@ -870,6 +870,9 @@ footer {
 .language-picker { border:1px solid transparent; }
 .language-picker:focus-within { outline:2px solid var(--green); outline-offset:0; }
 .language-picker select:focus-visible { outline:none; }
+
+/* The workbench visual system uses square controls and panels throughout. */
+*, *::before, *::after { border-radius: 0 !important; }
 .language-picker {
     display: flex;
     align-items: center;
