@@ -868,6 +868,11 @@ footer {
     color: var(--muted);
     font-size: 12px;
 }
+
+.language-picker.standalone {
+    justify-content: flex-end;
+    margin-bottom: 22px;
+}
 .language-picker select {
     font: inherit;
     color: var(--ink);
