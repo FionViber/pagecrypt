@@ -283,7 +283,7 @@ export const messages = {
     },
 }
 
-let locale = 'en'
+let locale = 'zh-CN'
 try {
     if (localStorage.getItem('pagecrypt-language') === 'zh-CN') locale = 'zh-CN'
 } catch {
