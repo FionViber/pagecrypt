@@ -439,6 +439,28 @@ $('decryptForm').addEventListener('submit', async (event) => {
 })
 
 $('language').addEventListener('change', (event) => setLanguage(event.target.value))
+
+function installLocalePicker() {
+    const select = $('language')
+    const container = select.closest('.language-picker')
+    if (!container || container.dataset.customPicker) return
+    container.dataset.customPicker = 'true'
+    const button = document.createElement('button')
+    button.type = 'button'; button.className = 'locale-button'
+    button.setAttribute('aria-haspopup', 'listbox'); button.setAttribute('aria-expanded', 'false')
+    button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-4 5-4 13 0 18m0-18c4 5 4 13 0 18"/></svg><span></span><span aria-hidden="true">⌄</span>'
+    const menu = document.createElement('div'); menu.className = 'locale-menu'; menu.hidden = true; menu.setAttribute('role', 'listbox')
+    const options = [...select.options]
+    for (const option of options) { const item = document.createElement('button'); item.type='button'; item.className='locale-option'; item.dataset.value=option.value; item.setAttribute('role','option'); item.textContent=option.textContent; item.addEventListener('click',()=>choose(option.value)); menu.append(item) }
+    select.hidden = true; container.append(button, menu)
+    function sync() { button.querySelector('span').textContent=options.find(option=>option.value===select.value)?.textContent||''; for(const item of menu.children) item.setAttribute('aria-selected',String(item.dataset.value===select.value)) }
+    function choose(value) { select.value=value; select.dispatchEvent(new Event('change',{bubbles:true})); menu.hidden=true; button.setAttribute('aria-expanded','false'); button.focus(); sync() }
+    button.addEventListener('click',()=>{menu.hidden=!menu.hidden;button.setAttribute('aria-expanded',String(!menu.hidden))})
+    document.addEventListener('click',event=>{if(!container.contains(event.target)){menu.hidden=true;button.setAttribute('aria-expanded','false')}})
+    button.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.hidden=true;button.setAttribute('aria-expanded','false')} if(event.key==='ArrowDown'){event.preventDefault();menu.hidden=false;menu.querySelector('.locale-option')?.focus()}})
+    sync()
+}
+installLocalePicker()
 $('modeFile').addEventListener('click', () => setInputMode('file'))
 $('modeText').addEventListener('click', () => setInputMode('text'))
 $('inputFile').addEventListener('change', (event) => loadFile(event.target.files[0]))

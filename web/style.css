@@ -206,3 +206,10 @@ form {
         transition: none;
     }
 }
+
+.locale-button { display:inline-flex; min-height:44px; align-items:center; gap:6px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font:inherit; }
+.locale-button svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.6; }
+.locale-menu { position:absolute; z-index:10; margin-top:2px; border:1px solid var(--line); background:var(--surface); }
+.locale-option { display:block; width:100%; min-height:44px; padding:8px 12px; border:0; background:var(--surface); color:var(--ink); text-align:start; }
+.locale-option:hover, .locale-option[aria-selected="true"] { background:var(--page); }
+.locale-button:focus-visible, #language:focus-visible { outline:2px solid #0066b9; outline-offset:0; }
