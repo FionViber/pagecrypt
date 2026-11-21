@@ -87,11 +87,11 @@ function installLocalePicker() {
     if (!container || container.dataset.customPicker) return
     container.dataset.customPicker = 'true'
     const button = document.createElement('button'); button.type='button'; button.className='locale-button'; button.setAttribute('aria-haspopup','listbox'); button.setAttribute('aria-expanded','false')
-    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-4 5-4 13 0 18m0-18c-4 5-4 13 0 18"/></svg><span></span><span aria-hidden="true">⌄</span>'
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-4 5-4 13 0 18m0-18c-4 5-4 13 0 18"/></svg><span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
     const menu=document.createElement('div'); menu.className='locale-menu'; menu.hidden=true; menu.setAttribute('role','listbox'); const options=[...languageSelect.options]
     for(const option of options){const item=document.createElement('button');item.type='button';item.className='locale-option';item.dataset.value=option.value;item.setAttribute('role','option');item.textContent=option.textContent;item.addEventListener('click',()=>choose(option.value));menu.append(item)}
     languageSelect.hidden=true;container.append(button,menu)
-    function sync(){button.querySelector('span')!.textContent=options.find(option=>option.value===languageSelect.value)?.textContent||'';for(const item of menu.children)item.setAttribute('aria-selected',String((item as HTMLElement).dataset.value===languageSelect.value))}
+    function sync(){button.querySelector('span')!.textContent=options.find(option=>option.value===languageSelect.value)?.textContent||'';button.setAttribute('aria-label', messages[locale].language);for(const item of menu.children)item.setAttribute('aria-selected',String((item as HTMLElement).dataset.value===languageSelect.value))}
     function choose(value:string){languageSelect.value=value;languageSelect.dispatchEvent(new Event('change',{bubbles:true}));menu.hidden=true;button.setAttribute('aria-expanded','false');button.focus();sync()}
     button.addEventListener('click',()=>{menu.hidden=!menu.hidden;button.setAttribute('aria-expanded',String(!menu.hidden))});document.addEventListener('click',event=>{if(!container.contains(event.target as Node)){menu.hidden=true;button.setAttribute('aria-expanded','false')}});button.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.hidden=true;button.setAttribute('aria-expanded','false')}});sync()
 }

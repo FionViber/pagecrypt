@@ -327,4 +327,5 @@ export function renderLanguage() {
     for (const element of document.querySelectorAll('[data-i18n-placeholder]')) {
         element.setAttribute('placeholder', t(element.dataset.i18nPlaceholder))
     }
+    window.dispatchEvent(new Event('languagechange'))
 }
